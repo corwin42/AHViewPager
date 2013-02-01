@@ -37,7 +37,7 @@ public class FixedTabsView extends LinearLayout implements ViewPager.OnPageChang
 	protected BA mBa;
 	private String mEventName;
 
-	private ViewPager mPager;
+	private CustomViewPager mPager;
 
 	private ArrayList<View> mTabs = new ArrayList<View>();
 
@@ -98,7 +98,7 @@ public class FixedTabsView extends LinearLayout implements ViewPager.OnPageChang
 	 * Binds the {@link ViewPager} to this View
 	 * 
 	 */
-	public void setViewPager(ViewPager pager, String eventName) {
+	public void setViewPager(CustomViewPager pager, String eventName) {
 
 		if (!(pager.getAdapter() instanceof ViewPagerTabProvider)) {
 			throw new IllegalStateException("The pager's adapter has to implement ViewPagerTabProvider.");
@@ -149,7 +149,8 @@ public class FixedTabsView extends LinearLayout implements ViewPager.OnPageChang
 			tab.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					mPager.setCurrentItem(index);
+					if (mPager.getPagingEnabled())
+						mPager.setCurrentItem(index);
 				}
 			});
 

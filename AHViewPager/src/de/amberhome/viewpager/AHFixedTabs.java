@@ -1,6 +1,5 @@
 package de.amberhome.viewpager;
 
-import android.support.v4.view.ViewPager;
 import anywheresoftware.b4a.BA;
 import anywheresoftware.b4a.BA.ActivityObject;
 import anywheresoftware.b4a.BA.DontInheritEvents;
@@ -26,7 +25,7 @@ public class AHFixedTabs extends ViewWrapper<FixedTabsView> {
 	{
 		super.Initialize(ba, "");
 
-		((FixedTabsView)getObject()).setViewPager((ViewPager)Pager.getObject(), Pager.mEventName);
+		((FixedTabsView)getObject()).setViewPager((CustomViewPager)Pager.getObject(), Pager.mEventName);
 	}
 
 	@Hide

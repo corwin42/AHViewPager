@@ -9,10 +9,11 @@
 //    - Fix UppercaseTitle
 // v2.00
 //    - Complete new code for Swipeytabs
+// 
+// History now on Github
 
 package de.amberhome.viewpager;
 
-import android.support.v4.view.ViewPager;
 import anywheresoftware.b4a.BA;
 import anywheresoftware.b4a.BA.ActivityObject;
 import anywheresoftware.b4a.BA.Author;
@@ -23,7 +24,7 @@ import anywheresoftware.b4a.BA.ShortName;
 import anywheresoftware.b4a.BA.Version;
 import anywheresoftware.b4a.objects.ViewWrapper;
 
-@Version(2.00f)
+@Version(2.01f)
 @Author("Markus Stipp")
 
 @ActivityObject
@@ -33,10 +34,10 @@ import anywheresoftware.b4a.objects.ViewWrapper;
 /**
  * AHViewPager is the main Object that makes the sliding of the pages. 
  */
-public class AHViewPager extends ViewWrapper<ViewPager> {
+public class AHViewPager extends ViewWrapper<CustomViewPager> {
 
 	/**
-	 * This library provides objects to implement a ViewPager. 
+	 * This library provides objects to implement a CustomViewPager. 
 	 */
 	public static void LIBRARY_DOC() {
 
@@ -54,17 +55,17 @@ public class AHViewPager extends ViewWrapper<ViewPager> {
 	{
 		super.Initialize(ba, EventName);
 		Layout.mEventName = EventName.toLowerCase();
-		((ViewPager)getObject()).setAdapter(Layout);
+		((CustomViewPager)getObject()).setAdapter(Layout);
 	}
 
 	@Hide
 	public void innerInitialize(final BA ba, final String EventName, boolean keepOldObject) {
 		if (!keepOldObject)
-			setObject(new ViewPager(ba.context));
+			setObject(new CustomViewPager(ba.context));
 		super.innerInitialize(ba, EventName, true);
 		mEventName = EventName;
 		if (ba.subExists(EventName + "_pagechanged")) {
-			((ViewPager)getObject()).setOnPageChangeListener(new ViewPager.OnPageChangeListener()
+			((CustomViewPager)getObject()).setOnPageChangeListener(new CustomViewPager.OnPageChangeListener()
 			{
 
 				@Override
@@ -81,7 +82,7 @@ public class AHViewPager extends ViewWrapper<ViewPager> {
 
 				@Override
 				public void onPageSelected(int arg0) {
-					ba.raiseEvent(getObject(), EventName + "_pagechanged", new Object[] {((ViewPager)getObject()).getCurrentItem()});
+					ba.raiseEvent(getObject(), EventName + "_pagechanged", new Object[] {((CustomViewPager)getObject()).getCurrentItem()});
 				}
 			});
 		}
@@ -98,18 +99,29 @@ public class AHViewPager extends ViewWrapper<ViewPager> {
 	 * Smooth - True to smoothly scroll to the new item, false to transition immediately
 	 */
 	public void GotoPage(int Page, boolean Smooth) {
-		((ViewPager)getObject()).setCurrentItem(Page, Smooth);
+		((CustomViewPager)getObject()).setCurrentItem(Page, Smooth);
 	}
 	
 	/**
 	 * Get or Set the current page
 	 */
 	public void setCurrentPage(int Page) {
-		((ViewPager)getObject()).setCurrentItem(Page);
+		((CustomViewPager)getObject()).setCurrentItem(Page);
 	}
 
 	public int getCurrentPage() {
-		return ((ViewPager)getObject()).getCurrentItem();
+		return ((CustomViewPager)getObject()).getCurrentItem();
+	}
+	
+	/**
+	 * Enables or disables the paging of the ViewPager.  
+	 */
+	public void setPagingEnabled(boolean Enabled) {
+		((CustomViewPager)getObject()).setPagingEnabled(Enabled);
+	}
+	
+	public boolean getPagingEnabled() {
+		return ((CustomViewPager)getObject()).getPagingEnabled();
 	}
 
 }

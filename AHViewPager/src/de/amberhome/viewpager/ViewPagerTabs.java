@@ -43,7 +43,7 @@ OnPageChangeListener, OnTouchListener {
     // Length of the horizontal fading edges
     private static final int SHADOW_WIDTH = 20;
     
-    private ViewPager mPager;
+    private CustomViewPager mPager;
     
     private int mTabsCount = 0;
     
@@ -232,7 +232,8 @@ OnPageChangeListener, OnTouchListener {
         tab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-				mPager.setCurrentItem(((ViewPagerTab) v).getIndex());
+            	if (mPager.getPagingEnabled())
+					mPager.setCurrentItem(((ViewPagerTab) v).getIndex());
             }
         });
         
@@ -894,7 +895,8 @@ OnPageChangeListener, OnTouchListener {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mDragX = x;
-                mPager.beginFakeDrag();
+                if (mPager.getPagingEnabled())
+                	mPager.beginFakeDrag();
                 break;
             case MotionEvent.ACTION_MOVE:
                 if (!mPager.isFakeDragging()) break;
