@@ -507,6 +507,12 @@ OnPageChangeListener, OnTouchListener {
      */
     @Override
     public void onPageScrollStateChanged(int state) {
+		if (mBa.subExists(mEventName + "_pagescrollstatechanged")) {
+			mBa.raiseEvent(
+					mPager,
+					mEventName + "_pagescrollstatechanged",
+					new Object[] { state });
+		}
     }
     
     /**
@@ -551,6 +557,14 @@ OnPageChangeListener, OnTouchListener {
         }
 
         offsetChildren();
+
+		if (mBa.subExists(mEventName + "_pagescrolled")) {
+			mBa.raiseEvent(
+					mPager,
+					mEventName + "_pagescrolled",
+					new Object[] { position, positionOffset, positionOffsetPixels });
+		}
+    
     }
 
     private void offsetChildren() {

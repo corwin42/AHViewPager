@@ -161,10 +161,24 @@ public class FixedTabsView extends LinearLayout implements ViewPager.OnPageChang
 	}
 
 	@Override
-	public void onPageScrollStateChanged(int state) {}
+    public void onPageScrollStateChanged(int state) {
+		if (mBa.subExists(mEventName + "_pagescrollstatechanged")) {
+			mBa.raiseEvent(
+					mPager,
+					mEventName + "_pagescrollstatechanged",
+					new Object[] { state });
+		}
+    }
 
 	@Override
-	public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+	public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+		if (mBa.subExists(mEventName + "_pagescrolled")) {
+			mBa.raiseEvent(
+					mPager,
+					mEventName + "_pagescrolled",
+					new Object[] { position, positionOffset, positionOffsetPixels });
+		}
+	}
 
 	@Override
 	public void onPageSelected(int position) {

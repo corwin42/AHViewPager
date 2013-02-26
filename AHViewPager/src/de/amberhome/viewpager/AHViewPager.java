@@ -14,6 +14,7 @@
 
 package de.amberhome.viewpager;
 
+import android.support.v4.view.ViewPager;
 import anywheresoftware.b4a.BA;
 import anywheresoftware.b4a.BA.ActivityObject;
 import anywheresoftware.b4a.BA.Author;
@@ -24,20 +25,23 @@ import anywheresoftware.b4a.BA.ShortName;
 import anywheresoftware.b4a.BA.Version;
 import anywheresoftware.b4a.objects.ViewWrapper;
 
-@Version(2.01f)
+@Version(2.02f)
 @Author("Markus Stipp")
-
 @ActivityObject
 @ShortName("AHViewPager")
-@Events(values={"PageChanged (Position As Int)", "PageCreated (Position As Int, Page as Object)", "PageDestroyed (Position As Int, Page as Object)"})
-@DependsOn(values={"android-support-v4"})
+@Events(values = { "PageChanged (Position As Int)",
+		"PageScrollStateChanged (State as Int)",
+		"PageScrolled (Position As Int, PositionOffset as Float, PositionOffsetPixels as Int)",
+		"PageCreated (Position As Int, Page as Object)",
+		"PageDestroyed (Position As Int, Page as Object)" })
+@DependsOn(values = { "android-support-v4" })
 /**
  * AHViewPager is the main Object that makes the sliding of the pages. 
  */
 public class AHViewPager extends ViewWrapper<CustomViewPager> {
 
 	/**
-	 * This library provides objects to implement a CustomViewPager. 
+	 * This library provides objects to implement a CustomViewPager.
 	 */
 	public static void LIBRARY_DOC() {
 
@@ -45,83 +49,98 @@ public class AHViewPager extends ViewWrapper<CustomViewPager> {
 
 	protected String mEventName;
 	
+	public static int SCROLLSTATE_IDLE = ViewPager.SCROLL_STATE_IDLE;
+	public static int SCROLLSTATE_DRAGGING = ViewPager.SCROLL_STATE_DRAGGING;
+	public static int SCROLLSTATE_SETTLING = ViewPager.SCROLL_STATE_SETTLING;
+
 	/**
 	 * Initializes the object.
 	 * 
-	 * Layout - A fully initialized AHPagerLayout object with the content of the pages 
-	 * EventName - Sets the sub that will handle the event.
+	 * Layout - A fully initialized AHPagerLayout object with the content of the
+	 * pages EventName - Sets the sub that will handle the event.
 	 */
-	public void Initialize(BA ba, AHPageContainer Layout, String EventName)
-	{
+	public void Initialize(BA ba, AHPageContainer Layout, String EventName) {
 		super.Initialize(ba, EventName);
 		Layout.mEventName = EventName.toLowerCase();
-		((CustomViewPager)getObject()).setAdapter(Layout);
+		((CustomViewPager) getObject()).setAdapter(Layout);
 	}
 
 	@Hide
-	public void innerInitialize(final BA ba, final String EventName, boolean keepOldObject) {
+	public void innerInitialize(final BA ba, final String EventName,
+			boolean keepOldObject) {
 		if (!keepOldObject)
 			setObject(new CustomViewPager(ba.context));
 		super.innerInitialize(ba, EventName, true);
 		mEventName = EventName;
-		if (ba.subExists(EventName + "_pagechanged")) {
-			((CustomViewPager)getObject()).setOnPageChangeListener(new CustomViewPager.OnPageChangeListener()
-			{
 
-				@Override
-				public void onPageScrollStateChanged(int arg0) {
-					// TODO Auto-generated method stub
+		((CustomViewPager) getObject())
+				.setOnPageChangeListener(new CustomViewPager.OnPageChangeListener() {
 
-				}
+					@Override
+					public void onPageScrollStateChanged(int state) {
+						if (ba.subExists(EventName + "_pagescrollstatechanged")) {
+							ba.raiseEvent(
+									getObject(),
+									EventName + "_pagescrollstatechanged",
+									new Object[] { state });
+						}
+					}
 
-				@Override
-				public void onPageScrolled(int arg0, float arg1, int arg2) {
-					// TODO Auto-generated method stub
+					@Override
+					public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+						if (ba.subExists(EventName + "_pagescrolled")) {
+							ba.raiseEvent(
+									getObject(),
+									EventName + "_pagescrolled",
+									new Object[] { position, positionOffset, positionOffsetPixels });
+						}
+					}
 
-				}
+					@Override
+					public void onPageSelected(int position) {
+						if (ba.subExists(EventName + "_pagechanged")) {
+							ba.raiseEvent(
+									getObject(),
+									EventName + "_pagechanged",
+									new Object[] { position });
+						}
+					}
+				});
 
-				@Override
-				public void onPageSelected(int arg0) {
-					ba.raiseEvent(getObject(), EventName + "_pagechanged", new Object[] {((CustomViewPager)getObject()).getCurrentItem()});
-				}
-			});
-		}
-
-	}	
+	}
 
 	public AHViewPager() {
 		super();
 	}
 
 	/**
-	 * Jump or Scroll to the new page
-	 * Page - The new page to display
-	 * Smooth - True to smoothly scroll to the new item, false to transition immediately
+	 * Jump or Scroll to the new page Page - The new page to display Smooth -
+	 * True to smoothly scroll to the new item, false to transition immediately
 	 */
 	public void GotoPage(int Page, boolean Smooth) {
-		((CustomViewPager)getObject()).setCurrentItem(Page, Smooth);
+		((CustomViewPager) getObject()).setCurrentItem(Page, Smooth);
 	}
-	
+
 	/**
 	 * Get or Set the current page
 	 */
 	public void setCurrentPage(int Page) {
-		((CustomViewPager)getObject()).setCurrentItem(Page);
+		((CustomViewPager) getObject()).setCurrentItem(Page);
 	}
 
 	public int getCurrentPage() {
-		return ((CustomViewPager)getObject()).getCurrentItem();
+		return ((CustomViewPager) getObject()).getCurrentItem();
 	}
-	
+
 	/**
-	 * Enables or disables the paging of the ViewPager.  
+	 * Enables or disables the paging of the ViewPager.
 	 */
 	public void setPagingEnabled(boolean Enabled) {
-		((CustomViewPager)getObject()).setPagingEnabled(Enabled);
+		((CustomViewPager) getObject()).setPagingEnabled(Enabled);
 	}
-	
+
 	public boolean getPagingEnabled() {
-		return ((CustomViewPager)getObject()).getPagingEnabled();
+		return ((CustomViewPager) getObject()).getPagingEnabled();
 	}
 
 }
