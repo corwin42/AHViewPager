@@ -9,7 +9,12 @@
 //    - Fix UppercaseTitle
 // v2.00
 //    - Complete new code for Swipeytabs
-// 
+// v2.10
+//    - Use raiseEventfromUI() in most events
+//    - New SupportTabs object
+//    - New SupportTitles object
+// v2.20
+//    - Use addOnPageChangedListener
 // History now on Github
 
 package de.amberhome.viewpager;
@@ -25,7 +30,7 @@ import anywheresoftware.b4a.BA.ShortName;
 import anywheresoftware.b4a.BA.Version;
 import anywheresoftware.b4a.objects.ViewWrapper;
 
-@Version(2.02f)
+@Version(2.20f)
 @Author("Markus Stipp")
 @ActivityObject
 @ShortName("AHViewPager")
@@ -74,12 +79,12 @@ public class AHViewPager extends ViewWrapper<CustomViewPager> {
 		mEventName = EventName;
 
 		((CustomViewPager) getObject())
-				.setOnPageChangeListener(new CustomViewPager.OnPageChangeListener() {
+				.addOnPageChangeListener(new CustomViewPager.OnPageChangeListener() {
 
 					@Override
 					public void onPageScrollStateChanged(int state) {
 						if (ba.subExists(EventName + "_pagescrollstatechanged")) {
-							ba.raiseEvent(
+							ba.raiseEventFromUI(
 									getObject(),
 									EventName + "_pagescrollstatechanged",
 									new Object[] { state });
@@ -99,7 +104,7 @@ public class AHViewPager extends ViewWrapper<CustomViewPager> {
 					@Override
 					public void onPageSelected(int position) {
 						if (ba.subExists(EventName + "_pagechanged")) {
-							ba.raiseEvent(
+							ba.raiseEventFromUI(
 									getObject(),
 									EventName + "_pagechanged",
 									new Object[] { position });

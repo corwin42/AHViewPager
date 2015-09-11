@@ -87,7 +87,7 @@ public class AHPageContainer extends PagerAdapter implements ViewPagerTabProvide
 		v.setLayoutParams(lp);
 		
 		if (mBa.subExists(mEventName + "_pagecreated")) {
-			mBa.raiseEvent(container, mEventName + "_pagecreated", new Object[] {position, v});
+			mBa.raiseEventFromUI(container, mEventName + "_pagecreated", new Object[] {position, v});
 		}
 		
 		return v;
@@ -98,7 +98,7 @@ public class AHPageContainer extends PagerAdapter implements ViewPagerTabProvide
 	public void destroyItem(ViewGroup container, int position, Object view) {
 		((ViewPager) container).removeView((View) view);
 		if (mBa.subExists(mEventName + "_pagedestroyed")) {
-			mBa.raiseEvent(container, mEventName + "_pagedestroyed", new Object[] {position, view});
+			mBa.raiseEventFromUI(container, mEventName + "_pagedestroyed", new Object[] {position, view});
 		}
 	}
 
@@ -152,7 +152,8 @@ public class AHPageContainer extends PagerAdapter implements ViewPagerTabProvide
 	
 	@Hide
 	public CharSequence getPageTitle(int position) {
-		return super.getPageTitle(position);
+		//return super.getPageTitle(position);
+		return GetTitle(position);
 	}
 	
 	/**
@@ -200,7 +201,6 @@ public class AHPageContainer extends PagerAdapter implements ViewPagerTabProvide
 		return POSITION_NONE;
 	}
 	
-	@Hide
 	@Override
 	public void notifyDataSetChanged() {
 		super.notifyDataSetChanged();

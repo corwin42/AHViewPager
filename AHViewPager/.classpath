@@ -5,6 +5,6 @@
 	<classpathentry kind="lib" path="C:/Android/android-sdk/extras/android/support/v4/android-support-v4.jar"/>
 	<classpathentry kind="lib" path="C:/Users/stm/Dropbox/Basic4Android/SharedLibs/B4AShared.jar"/>
 	<classpathentry kind="lib" path="C:/Users/stm/Dropbox/Basic4Android/SharedLibs/Core.jar"/>
-	<classpathentry kind="lib" path="C:/Android/android-sdk/platforms/android-15/android.jar"/>
+	<classpathentry kind="lib" path="C:/Android/android-sdk/platforms/android-19/android.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
