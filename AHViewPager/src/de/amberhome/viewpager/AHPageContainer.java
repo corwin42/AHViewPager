@@ -12,6 +12,7 @@ import anywheresoftware.b4a.BA.ActivityObject;
 import anywheresoftware.b4a.BA.Hide;
 import anywheresoftware.b4a.BA.ShortName;
 import anywheresoftware.b4a.objects.collections.List;
+import de.amberhome.viewpager.internal.ViewPagerTabProvider;
 
 /**
  * AHPagerLayout holds the layout of the pages
@@ -198,6 +199,14 @@ public class AHPageContainer extends PagerAdapter implements ViewPagerTabProvide
 	@Override
 	public int getItemPosition(Object object) {
 		//return super.getItemPosition(object);
+		
+		for (int i=0; i<pages.getSize();i++) {
+			View v = (View) pages.Get(i);
+			if (object.equals(v)) {
+				return i;
+			}
+		}
+		
 		return POSITION_NONE;
 	}
 	
