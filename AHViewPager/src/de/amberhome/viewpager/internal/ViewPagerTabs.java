@@ -1,4 +1,4 @@
-package de.amberhome.viewpager;
+package de.amberhome.viewpager.internal;
 
 import java.util.ArrayList;
 
@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import anywheresoftware.b4a.BA;
+import de.amberhome.viewpager.AHViewPager;
 
 public class ViewPagerTabs extends ViewGroup implements
 OnPageChangeListener, OnTouchListener {
@@ -158,7 +159,7 @@ OnPageChangeListener, OnTouchListener {
 
 		this.mPager = pager.getObject();
 		mPager.setCurrentItem(this.mPosition);
-		mPager.setOnPageChangeListener(this);
+		mPager.addOnPageChangeListener(this);
 		mEventName = eventName.toLowerCase();
 
 		mLastOffsetX = mPager.getScrollX();

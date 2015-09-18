@@ -1,4 +1,4 @@
-package de.amberhome.viewpager;
+package de.amberhome.viewpager.internal;
 
 /*
  * Copyright (C) 2011 Andreas Stuetz <andreas.stuetz@gmail.com>

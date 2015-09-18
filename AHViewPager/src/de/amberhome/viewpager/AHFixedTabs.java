@@ -6,6 +6,8 @@ import anywheresoftware.b4a.BA.DontInheritEvents;
 import anywheresoftware.b4a.BA.Hide;
 import anywheresoftware.b4a.BA.ShortName;
 import anywheresoftware.b4a.objects.ViewWrapper;
+import de.amberhome.viewpager.internal.CustomViewPager;
+import de.amberhome.viewpager.internal.FixedTabsView;
 
 @ActivityObject
 @DontInheritEvents

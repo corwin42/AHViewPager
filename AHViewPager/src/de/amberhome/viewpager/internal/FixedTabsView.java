@@ -1,4 +1,4 @@
-package de.amberhome.viewpager;
+package de.amberhome.viewpager.internal;
 
 /*
  * Copyright (C) 2011 Andreas Stuetz <andreas.stuetz@gmail.com>
@@ -105,7 +105,7 @@ public class FixedTabsView extends LinearLayout implements ViewPager.OnPageChang
 		}
 		
 		this.mPager = pager;
-		mPager.setOnPageChangeListener(this);
+		mPager.addOnPageChangeListener(this);
 		mEventName = eventName.toLowerCase();
 
 		if (mPager != null) notifyDatasetChanged();
@@ -195,6 +195,7 @@ public class FixedTabsView extends LinearLayout implements ViewPager.OnPageChang
 	 * 
 	 * @return
 	 */
+	@SuppressWarnings("deprecation")
 	private View getSeparator() {
 		View v = new View(mContext);
 
@@ -213,6 +214,7 @@ public class FixedTabsView extends LinearLayout implements ViewPager.OnPageChang
 	/**
 	 * 
 	 */
+	@SuppressWarnings("deprecation")
 	private void applyStyles() {
 
 		final int count = getChildCount();

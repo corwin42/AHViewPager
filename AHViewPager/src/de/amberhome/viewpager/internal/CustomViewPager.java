@@ -1,4 +1,4 @@
-package de.amberhome.viewpager;
+package de.amberhome.viewpager.internal;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
